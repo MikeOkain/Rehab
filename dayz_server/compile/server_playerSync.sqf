@@ -1,12 +1,16 @@
-private ["_empty","_name","_playerwasNearby","_character","_magazines","_force","_characterID","_charPos","_isInVehicle","_timeSince","_humanity","_debug","_distance","_isNewMed","_isNewPos","_isNewGear","_playerPos","_playerGear","_playerBackp","_medical","_distanceFoot","_lastPos","_backpack","_kills","_killsB","_killsH","_headShots","_lastTime","_timeGross","_timeLeft","_currentWpn","_currentAnim","_config","_onLadder","_isTerminal","_currentModel","_modelChk","_muzzles","_temp","_currentState","_array","_key","_pos","_forceGear","_friendlies"];
+private ["_removebackpack","_empty","_name","_playerwasNearby","_character","_magazines","_force","_characterID","_charPos","_isInVehicle","_timeSince","_humanity","_debug","_distance","_isNewMed","_isNewPos","_isNewGear","_playerPos","_playerGear","_playerBackp","_medical","_distanceFoot","_lastPos","_backpack","_kills","_killsB","_killsH","_headShots","_lastTime","_timeGross","_timeLeft","_currentWpn","_currentAnim","_config","_onLadder","_isTerminal","_currentModel","_modelChk","_muzzles","_temp","_currentState","_array","_key","_pos","_forceGear","_friendlies"];
 _character = _this select 0;
 _magazines = _this select 1;
 //_force = _this select 2;
 _forceGear =	_this select 3;
 _force =	true;
 _playerwasNearby = false;
+_removebackpack = false;
 if ((count _this) > 4) then {
 _playerwasNearby =	_this select 4;
+};
+if ((count _this) > 5) then {
+    _removebackpack = _this select 5;
 };
 if (isNull _character) exitWith {
 diag_log ("Player is Null FAILED: Exiting, player sync: " + str(_character));
@@ -78,6 +82,9 @@ _playerBackp = [typeOf _backpack,_empty,_empty];
 } else {
 _playerBackp = [typeOf _backpack,getWeaponCargo _backpack,getMagazineCargo _backpack];
 };
+};
+if(_removeBackpack) then {
+	_playerBackp = ["",[[],[]],[[],[]]];
 };
 if (_isNewMed || _force) then {
 //diag_log ("medical..."); sleep 0.05;
